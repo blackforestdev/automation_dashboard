@@ -13,12 +13,22 @@ Smart Garden Dashboard is a web-based interface for monitoring and controlling v
 - **Irrigation Control Widget**: Manages water sources, irrigation zones, and watering schedules.
 
 ## Installation
-1. Clone the repository: 
+1. Clone the repository:
+	```bash 
 	https://github.com/blackforestdev/automation_dashboard
-2. Navigate to the project directory: 
-	cd automation_dashboard 
-3. Start the server: 
+	```
+2. Navigate to the project directory:
+	```bash 
+	cd automation_dashboard
+	```
+3. Install dependencies:
+	```bash 
+	pip install -r requirements.txt
+	```
+3. Start the server:
+	```bash 
 	python3 server.py
+	```
 4. Open `index.html` in a web browser to view the dashboard.
 
 ## Usage
