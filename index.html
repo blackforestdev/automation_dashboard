@@ -1,0 +1,253 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard</title>
+    <link rel="stylesheet" href="styles.css">
+    <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+</head>
+<body>
+    <div class="dashboard">
+        <!-- Clock section -->
+        <div class="widget" draggable="true" id="clock-widget">
+            <div class="widget-header">Clock</div>
+            <div class="widget-content">
+                <div class="clock__container">
+                    <div class="clock__content">
+                        <div class="clock__circle">
+                            <span class="clock__twelve"></span>
+                            <span class="clock__three"></span>
+                            <span class="clock__six"></span>
+                            <span class="clock__nine"></span>
+                            <div class="clock__rounder"></div>
+                            <div class="clock__hour" id="clock-hour"></div>
+                            <div class="clock__minutes" id="clock-minutes"></div>
+                            <div class="clock__seconds" id="clock-seconds"></div>
+                            <div class="clock__theme">
+                                <i class='bx bxs-moon' id="theme-button"></i>
+                            </div>
+                        </div>
+                        <div>
+                            <div class="clock__text">
+                                <div class="clock__text-hour" id="text-hour"></div>
+                                <div class="clock__text-minutes" id="text-minutes"></div>
+                                <div class="clock__text-ampm" id="text-ampm"></div>
+                            </div>
+                            <div class="clock__date">
+                                <span id="date-day-week"></span>
+                                <span id="date-day"></span>
+                                <span id="date-month"></span>
+                                <span id="date-year"></span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- Motor Actions section -->
+        <div class="widget" draggable="true" id="motor-actions-widget">
+            <div class="widget-header">Motor Actions</div>
+            <div class="widget-content">
+                <div id="motor-status" class="motor-status">Motor Status: Idle</div>
+                <div class="actions-section">
+                    <h3>Set Actions</h3>
+                    <form id="action-form">
+                        <div class="form-group">
+                            <label for="action-time">Set Time:</label>
+                            <input type="time" id="action-time" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="action-type">Action Type:</label>
+                            <select id="action-type" required>
+                                <option value="up">Motor Up</option>
+                                <option value="down">Motor Down</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label>Motor Duration:</label>
+                            <div class="duration-inputs">
+                                <input type="number" id="action-duration-minutes" min="0" max="59" placeholder="Min" required>
+                                <input type="number" id="action-duration-seconds" min="0" max="59" placeholder="Sec" required>
+                            </div>
+                        </div>
+                        <button type="submit" class="add-action-btn">Add Action</button>
+                    </form>
+                </div>
+                <div id="action-list" class="action-list"></div>
+            </div>
+        </div>
+        <!-- Environmental Sensor section -->
+        <div class="widget" draggable="true" id="env-sensor-widget">
+            <div class="widget-header">Environmental Sensors</div>
+            <div class="widget-content">
+                <div class="sensor-data">
+                    <div class="sensor-item">
+                        <span class="sensor-label">Temperature</span>
+                        <div class="sensor-value">
+                            <span id="temperature-value">22.5</span>
+                            <span class="sensor-unit">°C</span>
+                        </div>
+                    </div>
+                    <div class="sensor-item">
+                        <span class="sensor-label">Humidity</span>
+                        <div class="sensor-value">
+                            <span id="humidity-value">45</span>
+                            <span class="sensor-unit">%</span>
+                        </div>
+                    </div>
+                    <div class="sensor-item">
+                        <span class="sensor-label">VPD</span>
+                        <div class="sensor-value">
+                            <span id="vpd-value">1.2</span>
+                            <span class="sensor-unit">kPa</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- Lighting Controls section -->
+        <div class="widget" draggable="true" id="lighting-controls-widget">
+            <div class="widget-header">Lighting Controls</div>
+            <div class="widget-content">
+                <div id="light-status" class="light-status">
+                    <i class="fas fa-moon"></i> <!-- Default to moon, change with JavaScript -->
+                </div>
+                <div id="actions">
+                    <h3>Set Lighting Schedule</h3>
+                    <form id="lighting-form">
+                        <div class="form-group">
+                            <label for="light-time">Time:</label>
+                            <input type="time" id="light-time" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="light-action">Action:</label>
+                            <select id="light-action" required>
+                                <option value="on">Lights On</option>
+                                <option value="off">Lights Off</option>
+                            </select>
+                        </div>
+                        <button type="submit" class="add-action-btn">Add Schedule</button>
+                    </form>
+                </div>
+                <div id="lighting-schedule-list" class="schedule-list"></div>
+            </div>
+        </div>
+        <!--Co2 Controls section-->
+        <div class="widget" id="co2-monitoring-widget">
+            <div class="widget-header">CO2 Monitoring</div>
+            <div class="widget-content">
+                <div class="co2-display">
+                    <span class="co2-value">800</span>
+                    <span class="co2-unit">ppm</span>
+                </div>
+                <div class="co2-settings">
+                    <h3>Set Desired CO2 Level</h3>
+                    <form id="co2-form">
+                        <div class="form-group">
+                            <label for="co2-level">Desired CO2 (max 2000ppm):</label>
+                            <input type="number" id="co2-level" min="0" max="2000" step="50" value="1000" required>
+                        </div>
+                        <button type="submit" class="set-co2-btn">Set Level</button>
+                    </form>
+                </div>
+                <div class="co2-status">
+                    <span>Current Status: </span>
+                    <span id="co2-status-value">Normal</span>
+                </div>
+            </div>
+        </div>
+        <!--End of Co2 Controls section-->
+        <!-- Substrate Monitoring Section -->
+        <div class="widget" id="substrate-monitoring-widget">
+            <div class="widget-header">Substrate Monitoring</div>
+            <div class="widget-content">
+                <div class="substrate-data">
+                    <div class="substrate-item">
+                        <span class="substrate-label">Moisture (θ)</span>
+                        <div class="substrate-value">
+                            <span id="moisture-value">0.35</span>
+                            <span class="substrate-unit">m³m⁻³</span>
+                        </div>
+                    </div>
+                    <div class="substrate-item">
+                        <span class="substrate-label">Oxygen</span>
+                        <div class="substrate-value">
+                            <span id="oxygen-value">21</span>
+                            <span class="substrate-unit">%</span>
+                        </div>
+                    </div>
+                    <div class="substrate-item">
+                        <span class="substrate-label">EC</span>
+                        <div class="substrate-value">
+                            <span id="ec-value">1.5</span>
+                            <span class="substrate-unit">mS/cm</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!--End of Substrate Monitoring Section-->
+        <!--Irrigation Controls Section -->
+        <div class="widget" id="irrigation-control-widget">
+            <div class="widget-header">Irrigation Control</div>
+            <div class="widget-content">
+                <div class="irrigation-section">
+                    <h3>Water Sources</h3>
+                    <div id="water-sources">
+                        <div class="water-source">
+                            <input type="checkbox" id="plain-water" checked>
+                            <label for="plain-water">Plain Water</label>
+                        </div>
+                        <div class="water-source">
+                            <input type="checkbox" id="fertilizer-line">
+                            <label for="fertilizer-line">Fertilizer Line</label>
+                        </div>
+                    </div>
+                    <button id="add-water-source" class="btn-small">+ Add Source</button>
+                </div>
+                
+                <div class="irrigation-section">
+                    <h3>Zones</h3>
+                    <div class="zone-control">
+                        <label for="zone-count">Number of Zones:</label>
+                        <input type="number" id="zone-count" min="1" value="1">
+                    </div>
+                    <div id="zone-list"></div>
+                </div>
+                
+                <div class="irrigation-section">
+                    <h3>Schedule</h3>
+                    <form id="irrigation-schedule-form">
+                        <div class="form-group">
+                            <label for="schedule-zone">Zone:</label>
+                            <select id="schedule-zone"></select>
+                        </div>
+                        <div class="form-group">
+                            <label for="schedule-time">Time:</label>
+                            <input type="time" id="schedule-time" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="schedule-duration">Duration (minutes):</label>
+                            <input type="number" id="schedule-duration" min="1" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="schedule-source">Water Source:</label>
+                            <select id="schedule-source"></select>
+                        </div>
+                        <button type="submit" class="btn-primary">Add Schedule</button>
+                    </form>
+                </div>
+                
+                <div class="irrigation-section">
+                    <h3>Active Schedules</h3>
+                    <div id="active-schedules"></div>
+                </div>
+            </div>
+        </div>
+        <!--End of Irrigation Controls Section-->
+    </div>    
+    <script src="script.js"></script>
+</body>
+</html>
